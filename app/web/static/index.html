@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agrarii AI — агро-асистент</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="logo">🌱 Agrarii <span>AI</span></div>
+    <nav>
+      <button class="tab active" data-tab="chat">Чат</button>
+      <button class="tab" data-tab="metrics">Метрики</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ВКЛАДКА ЧАТ -->
+    <section id="chat" class="view active">
+      <div class="chat-wrap">
+        <div id="messages" class="messages">
+          <div class="msg bot">
+            <div class="bubble">Вітаю! Опишіть проблему рослини — наприклад «на картоплі скрутилося листя»
+              або «колорадський жук на картоплі». Я визначу причину й підберу препарати з нормами.</div>
+          </div>
+        </div>
+        <div class="composer">
+          <input id="input" type="text" placeholder="Опишіть симптом або поставте питання…" autocomplete="off">
+          <button id="send">Надіслати</button>
+        </div>
+      </div>
+
+      <!-- ПАНЕЛЬ ТРЕЙСУ АГЕНТІВ -->
+      <aside class="trace-panel">
+        <h3>Робота агентів</h3>
+        <div id="trace" class="trace"></div>
+      </aside>
+    </section>
+
+    <!-- ВКЛАДКА МЕТРИКИ -->
+    <section id="metrics" class="view">
+      <div class="metrics-head">
+        <h2>Метрики</h2>
+        <div>
+          <button id="refresh">Оновити</button>
+          <button id="reset" class="ghost">Скинути</button>
+        </div>
+      </div>
+      <div id="cards" class="cards"></div>
+
+      <div class="grid2">
+        <div class="block">
+          <h3>Запити у часі (остання година)</h3>
+          <div id="spark" class="spark"></div>
+        </div>
+        <div class="block">
+          <h3>Кеш</h3>
+          <div class="bar"><span class="bar-label">Влучань</span><div class="track"><div id="bar-hit" class="fill hit"></div></div><span id="hit-val"></span></div>
+          <div class="bar"><span class="bar-label">Промахів</span><div class="track"><div id="bar-miss" class="fill miss"></div></div><span id="miss-val"></span></div>
+        </div>
+      </div>
+
+      <div class="grid2">
+        <div class="block">
+          <h3>Розподіл по агентах</h3>
+          <div id="agents"></div>
+        </div>
+        <div class="block">
+          <h3>Топ питань</h3>
+          <div id="top"></div>
+        </div>
+      </div>
+
+      <div class="block">
+        <h3>Останні діалоги</h3>
+        <div id="recent"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+services:
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: agrarii_qdrant
+    ports:
+      - "6333:6333"   # REST + Web UI (http://localhost:6333/dashboard)
+      - "6334:6334"   # gRPC
+    volumes:
+      - ./qdrant_storage:/qdrant/storage
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    container_name: agrarii_redis
+    ports:
+      - "6379:6379"
+    restart: unless-stopped

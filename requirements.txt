@@ -1,0 +1,17 @@
+# Інжест
+openai>=1.40
+qdrant-client>=1.10
+python-dotenv>=1.0
+tqdm>=4.66
+
+# Агенти / swarm
+langgraph>=0.2.60
+langgraph-swarm>=0.0.5
+langchain-openai>=0.2
+langchain-core>=0.3
+requests>=2.31
+
+# Веб-шар
+fastapi>=0.110
+uvicorn[standard]>=0.29
+redis>=5.0

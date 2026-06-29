@@ -1,0 +1,21 @@
+# секрети та оточення
+.env
+*.key
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# дані / сторедж
+qdrant_storage/
+export/*.ndjson
+eval/REPORT.md
+
+# IDE / ОС
+.vscode/
+.idea/
+*.log
+Thumbs.db
+.DS_Store
