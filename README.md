@@ -21,53 +21,50 @@
 
 ```mermaid
 flowchart TB
-    U([Користувач]) --> WEB
+    U["Користувач"] --> WEB
 
-    subgraph WEB["🌐 Веб-шар FastAPI ✅"]
-        direction TB
-        GUARD["🛡️ Injection-guard ✅<br/>direct/Base64/ROT13/reverse"]
-        HMAC["🔐 Підписана історія HMAC ✅<br/>stateless + tamper-бан"]
-        RL["⏱️ Dual rate-limit ✅<br/>кеш vs LLM"]
-        CACHE["⚡ Семантичний кеш ✅<br/>Qdrant + контекст (ланцюжки)"]
-        MET["📊 Метрики ✅<br/>токени, $, агенти, трейс"]
+    subgraph WEB["Веб-шар FastAPI [OK]"]
+        GUARD["Injection-guard [OK]"]
+        HMAC["Підписана історія HMAC + tamper-бан [OK]"]
+        RL["Dual rate-limit: кеш vs LLM [OK]"]
+        CACHE["Семантичний кеш з контекстом [OK]"]
+        MET["Метрики: токени, вартість, агенти [OK]"]
     end
 
     WEB --> SWARM
 
-    subgraph SWARM["🤖 LangGraph Swarm ✅"]
-        direction LR
-        AD["Агент Хвороби ✅"]
-        AP["Агент Шкідники 🟡"]
-        APR["Агент Препарати ✅"]
-        AD <-->|handoff| AP
-        AD <-->|handoff| APR
-        AP <-->|handoff| APR
+    subgraph SWARM["LangGraph Swarm [OK]"]
+        AD["Агент Хвороби [OK]"]
+        AP["Агент Шкідники [partial]"]
+        APR["Агент Препарати [OK]"]
+        AD <--> AP
+        AD <--> APR
+        AP <--> APR
     end
 
     SWARM --> RAG
     SWARM --> API
 
-    subgraph RAG["🔎 Векторний пошук — Qdrant"]
-        direction TB
-        CD["diseases ✅"]
-        CP["pests ⬜"]
-        CPL["plants ⬜"]
-        CPR["preparations 🟡"]
-        CS["substances ⬜"]
+    subgraph RAG["Векторний пошук Qdrant"]
+        CD["diseases [OK]"]
+        CP["pests [TODO]"]
+        CPL["plants [TODO]"]
+        CPR["preparations [partial]"]
+        CS["substances [TODO]"]
     end
 
-    subgraph API["🧮 Структурний ендпоінт Drupal ✅"]
-        direction TB
-        RESOLVE["agrorag-api/resolve ✅<br/>назва → код ноди/терміна"]
-        PIDBIR["agrorag-api/pidbir ✅<br/>підбір препаратів + норми"]
+    subgraph API["Структурний ендпоінт сайту [OK]"]
+        RESOLVE["resolve: назва в код ноди [OK]"]
+        PIDBIR["pidbir: підбір препаратів + норми [OK]"]
     end
 
-    API -->|"рідна логіка підбору"| DB[("🗄️ MySQL<br/>сайту")]
-    RAG -.ембединги.-> OAI["OpenAI<br/>text-embedding-3-large"]
-    SWARM -.генерація.-> OAI2["OpenAI gpt-4o"]
-
-    EVAL["🧪 Eval-пайплайн ✅<br/>recall@k + LLM-Judge + golden set"] -.перевіряє.-> SWARM
+    API --> DB[(MySQL)]
+    RAG --> OAI["OpenAI embeddings"]
+    SWARM --> OAI2["OpenAI gpt-4o"]
+    EVAL["Eval: recall@k + LLM-Judge [OK]"] --> SWARM
 ```
+
+> Позначки стану: **[OK]** реалізовано · **[partial]** частково · **[TODO]** заплановано.
 
 ### Що реалізовано зараз
 
